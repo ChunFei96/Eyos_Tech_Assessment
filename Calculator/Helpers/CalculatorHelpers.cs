@@ -14,7 +14,7 @@ namespace Calculator.Helpers
             {
                 return Infix.ParseOrThrow(input);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("\nMessage ---\n{0}", ex.Message);
                 Console.WriteLine(
@@ -26,7 +26,7 @@ namespace Calculator.Helpers
                     "\nTargetSite ---\n{0}", ex.TargetSite);
                 return null;
             }
-            
+
         }
 
         public static string ReverseDegreeOrder(Expression expression)
@@ -47,6 +47,32 @@ namespace Calculator.Helpers
                     "\nTargetSite ---\n{0}", ex.TargetSite);
                 return null;
             }
+        }
+
+        public static bool isOperator(char _char)
+        {
+            if (_char.Equals('+') || _char.Equals('*'))
+                return true;
+            return false;
+        }
+
+        public static bool isBracket(char _char)
+        {
+            if (_char.Equals('(') || _char.Equals(')'))
+                return true;
+            return false;
+        }
+
+        public static int PriorityRank(char _char)
+        {
+            int priority = 0;
+
+            if (_char.Equals('*'))
+                return 2;
+            else if (_char.Equals('+'))
+                return 1;
+
+            return priority;
         }
     }
 }
