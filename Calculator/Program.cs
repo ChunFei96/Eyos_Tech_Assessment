@@ -23,21 +23,50 @@ namespace Calculator
 
             CalculatorController calculator = new CalculatorController(_calculatorService);
 
-            string testinput = "((1+2+1)*(1+1)*x)";
-            Console.WriteLine(InfixToPostFix(testinput));
-            //// declare variables
-            //var x = Expr.Symbol("x");
+            //string testinput = "((1+2+1)*(1+1)*x)";
+            //Console.WriteLine(InfixToPostFix(testinput));
 
-            //while (true)
-            //{
+            Console.WriteLine("---------------------------------------------------------------------------------------");
+            Console.WriteLine("Pair Programming");
+            Console.WriteLine("Addition & Multiplication of math expression (Assume only 1 variable)");
+            Cal cal = new Cal();
+            cal.number = 7;
+            cal.variable = "x";
 
-            //    Console.Write("Please enter math expression: ");
+            Cal cal1 = new Cal();
+            cal1.number = 4;
+            cal1.variable = "x";
 
-            //    string input = Console.ReadLine();
+            Cal cal2 = new Cal();
+            cal2.number = 7;
+            cal2.variable = "x^3";
 
-            //    Console.WriteLine(string.Format("Answer: {0}", calculator.Compute(input)));
+            Cal cal3 = new Cal();
+            cal3.number = 4;
+            cal3.variable = "x^2";
 
-            //}
+            Console.WriteLine(String.Format("{0}{1} + {2}{3} = {4}", cal.number.ToString(), cal.variable, cal1.number.ToString(), cal1.variable, cal.Addition(cal, cal1)));
+            Console.WriteLine(String.Format("{0}{1} * {2}{3} = {4}", cal2.number.ToString(), cal2.variable, cal3.number.ToString(), cal3.variable, cal.Multiple(cal2, cal3)));
+
+            Console.WriteLine("---------------------------------------------------------------------------------------\n");
+
+            Console.WriteLine("---------------------------------------------------------------------------------------");
+            Console.WriteLine("Technical Assessment");
+            // declare variables
+            var x = Expr.Symbol("x");
+
+            while (true)
+            {
+
+                Console.Write("Please enter math expression: ");
+
+                string input = Console.ReadLine();
+
+                Console.WriteLine(string.Format("Answer: {0}", calculator.Compute(input)));
+
+            }
+
+
         }
 
         static string InfixToPostFix(string input)
@@ -113,28 +142,55 @@ namespace Calculator
             return Postfix;
 
         }
-
-        public void Addition()
-        {
-            VA vA = new VA();
-            VA vA2 = new VA();
-
-            if (vA.variable == vA2.variable)
-            {
-                var answer = vA.number + vA2.number;
-            }
-
-
-        }
-
-
-
     }
 
-    public class VA
+    public class Cal
     {
         public int number { get; set; }
-        public char variable { get; set; }
+        public string variable { get; set; }
 
+        public string Addition(Cal A1, Cal A2)
+        {
+            var answer = string.Empty;
+            if (A1.variable.Equals(A2.variable))
+            {
+                answer += (A1.number + A2.number).ToString();
+                answer += A1.variable;
+            }
+
+            return answer;
+        }
+
+        public string Multiple(Cal A1, Cal A2)
+        {
+            var answerNumber = 0;
+            var answerVariable = string.Empty;
+
+            answerNumber = A1.number * A2.number;
+
+            int A1power = 1;
+            int A2power = 1;
+            string _variable = string.Empty;
+            int totalPower = 0;
+            if (A1.variable.Contains("^"))
+            {
+                _variable = A1.variable.Split('^')[0];
+                A1power = Convert.ToInt32(A1.variable.Split('^')[1]);
+
+            }
+
+            if (A2.variable.Contains("^"))
+            {
+                _variable = A2.variable.Split('^')[0];
+                A2power = Convert.ToInt32(A2.variable.Split('^')[1]);
+            }
+
+            totalPower = A1power + A2power;
+            answerVariable = _variable + "^" + totalPower.ToString();
+
+
+
+            return answerNumber + "*" + answerVariable;
+        }
     }
 }
